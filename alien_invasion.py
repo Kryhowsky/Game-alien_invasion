@@ -32,11 +32,13 @@ def run_game():
 	
 	#Utworzenie przycisku Gra.
 	play_button = Button(ai_settings, screen, 'Gra')
+	pygame.display.flip()
+	pygame.display.update()
 	
 	#Rozpoczęcie pętli głównej gry.
 	while True:
 		gf.check_events(ai_settings, screen, stats, play_button, ship,
-		bullets)
+		aliens, bullets)
 		if stats.game_active:
 			ship.update()
 			gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
@@ -44,5 +46,7 @@ def run_game():
 			bullets)
 			gf.update_screen(ai_settings, screen, stats, ship, aliens, 
 			bullets, play_button)
+		pygame.display.flip()
+		pygame.display.update()
 
 run_game()

@@ -9,7 +9,7 @@ class Button():
 	
 		#Zdefiniowanie wymiarów i właściwości przycisku.
 		self.width, self.height = 200, 50
-		self.button_color = (0, 255, 0)
+		self.button_color = (126, 55, 77)
 		self.text_color = (100, 255, 100)
 		self.font = pygame.font.SysFont(None, 48)
 	
@@ -17,6 +17,8 @@ class Button():
 		self.rect = pygame.Rect(0, 0, self.width, self.height)
 		self.rect.center = self.screen_rect.center
 		self.prep_msg(msg)
+		pygame.display.flip()
+		pygame.display.update()
 	
 	def prep_msg(self, msg):
 		"""Umieszczenie komunikatu w wygenerowanym obrazie i 
@@ -30,4 +32,6 @@ class Button():
 		#Wyświtlenie pustego przycisku, a następnie komunikatu na nim.
 		self.screen.fill(self.button_color, self.rect)
 		self.screen.blit(self.msg_image, self.msg_image_rect)
+		pygame.display.flip()
+
 		
