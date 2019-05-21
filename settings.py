@@ -23,6 +23,9 @@ class Settings():
 		#Łatwa zmiana szybklości gry
 		self.speedup_scale = 1.1
 		
+		#Łatwa zmiana liczby punktów za zestrzelenie obcego.
+		self.score_scale = 1.5
+		
 		self.initialize_dynamic_settings()
 		
 	def initialize_dynamic_settings(self):
@@ -30,6 +33,9 @@ class Settings():
 		self.ship_speed_factor = 1
 		self.bullet_speed_factor = 3
 		self.alien_speed_factor = 0.5
+		
+		#Punktacja
+		self.alien_points = 50
 		
 		#Wartość fleet_direction wynosząca 1 oznacza prawo, natomiast
 		#-1 oznacza lewo.
@@ -40,4 +46,6 @@ class Settings():
 		self.ship_speed_factor *= self.speedup_scale
 		self.bullet_speed_factor *= self.speedup_scale
 		self.alien_speed_factor *= self.speedup_scale
+		self.alien_points = int(self.alien_points * self.score_scale)
+		print(self.alien_points)
 		

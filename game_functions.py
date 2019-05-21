@@ -73,7 +73,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship,
 		create_fleet(ai_settings, screen, ship, aliens)
 		ship.center_ship()
 
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets,
 	play_button):
 	"""Uaktualnienie obrazów na ekranie i przejście do nowego ekranu."""
 	#Odświeżenie ekranu w trakcie każdej iteracji pętli.
@@ -93,8 +93,11 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
 	#Wyświetlenie ostatnio zmodyfikowanego ekranu.
 	pygame.display.flip()
 	
+	#Wyświetlenie informacji o punktacji.
+	sb.show_score()
 	
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+	
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
 	"""Uaktualnienie położenia pocisków i usunięcie tych niewidocznych
 	na ekranie."""
 	#Uaktualnienie położenia pocisków.
@@ -105,15 +108,20 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
 			
-	check_bullet_alien_collisions(ai_settings,screen, ship, aliens,
-	bullets)
+	check_bullet_alien_collisions(ai_settings,screen, stats, sb, 
+	ship, aliens, bullets)
 	
-def check_bullet_alien_collisions(ai_settings,screen, ship, aliens,
-bullets):
+def check_bullet_alien_collisions(ai_settings,screen, stats, sb, ship, 
+	aliens, bullets):
 	"""Reakcja na kolizję między pociskiem i obcym."""
 	#Usunięcie wszystkich pocisków i obcych, między którymi doszło
 	#do kolizji.
 	collisions = pygame.sprite.groupcollide(bullets,aliens, True, True)
+	if collisions:
+		for aliens in collisions.values():
+			stats.score += ai_settings.alien_points * len(aliens)
+			sb.prep_score()
+		
 	if len(aliens) == 0:
 		#Pozbycie się istniejących pocisków i utworzenie floty.
 		bullets.empty()
